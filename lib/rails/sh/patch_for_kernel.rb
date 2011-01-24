@@ -1,6 +1,7 @@
 module Kernel
   alias_method :_require, :require
   def require(name)
+    name = name.to_s
     if name =~ /^rails\/commands\//
       load "#{name}.rb"
     else

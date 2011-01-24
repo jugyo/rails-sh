@@ -11,7 +11,9 @@ module Rails
       def start
         setup_readline
         while buf = Readline.readline("\e[42mrails>\e[0m ", true)
-          execute(buf)
+          line = buf.strip
+          next if line.empty?
+          execute(line)
           setup_readline
         end
       end
@@ -24,7 +26,6 @@ module Rails
       end
 
       def execute(line)
-        line = line.strip
         if command = Command.find(line)
           arg = line[/\s+\w+/].strip rescue nil
           command.call(arg)

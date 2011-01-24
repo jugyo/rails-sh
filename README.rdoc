@@ -7,6 +7,25 @@ The Rails Shell to execute sub commands of rails quickly.
   $ cd your-rails3-app
   $ rails-sh
 
+== Example
+
+  rails> g controller foo bar
+  $ rails g controller foo bar
+        create  app/controllers/foo_controller.rb
+         route  get "foo/bar"
+        invoke  erb
+        create    app/views/foo
+        create    app/views/foo/bar.html.erb
+        invoke  test_unit
+        create    test/functional/foo_controller_test.rb
+        invoke  helper
+        create    app/helpers/foo_helper.rb
+        invoke    test_unit
+        create      test/unit/helpers/foo_helper_test.rb
+
+  rails> routes
+  foo_bar GET /foo/bar(.:format) {:controller=>"foo", :action=>"bar"}
+
 == Contributing to rails-sh
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

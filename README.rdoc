@@ -1,8 +1,6 @@
 = rails-sh
 
-The Rails Shell to execute sub commands of rails quickly.
-
-This only supports Rails3 :)
+rails-sh is a mini shell for rails3 that provides a uniform and quick access to commands.
 
 == Install
 

@@ -2,6 +2,8 @@
 
 The Rails Shell to execute sub commands of rails quickly.
 
+This only supports Rails3 :)
+
 == Install
 
   $ gem install rails-sh

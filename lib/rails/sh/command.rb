@@ -11,7 +11,11 @@ module Rails
         end
 
         def find(line)
-          commands[line[/\w+/].to_sym]
+          if name = line[/\w+/]
+            commands[name.to_sym]
+          else
+            nil
+          end
         end
 
         def command_names

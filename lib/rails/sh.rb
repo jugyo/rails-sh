@@ -1,5 +1,5 @@
 require 'rails/sh/command'
-require 'rails/sh/patch_for_require'
+require 'rails/sh/patch_for_kernel'
 require 'readline'
 
 module Rails

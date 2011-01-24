@@ -7,4 +7,9 @@ module Kernel
       _require(name)
     end
   end
+
+  alias_method :_exec, :exec
+  def exec(*args)
+    system(*args)
+  end
 end

@@ -13,7 +13,9 @@ This only supports Rails3 :)
   $ cd your-rails3-app
   $ rails-sh
 
-== Example
+== Examples
+
+Generate a controller:
 
   rails> g controller foo bar
   $ rails g controller foo bar
@@ -29,8 +31,31 @@ This only supports Rails3 :)
         invoke    test_unit
         create      test/unit/helpers/foo_helper_test.rb
 
+Run console:
+
+  rails> console
+
+use `irb_exit` to exit from console.
+
+Print routes:
+
   rails> routes
   foo_bar GET /foo/bar(.:format) {:controller=>"foo", :action=>"bar"}
+
+== Commands
+
+* generate
+* destroy
+* plugin
+* benchmarker
+* profiler
+* console
+* server
+* dbconsole
+* application
+* runner
+* routes
+* exit
 
 == Contributing to rails-sh
  

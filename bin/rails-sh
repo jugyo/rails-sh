@@ -7,8 +7,6 @@ require File.expand_path('./config/boot')
 require APP_PATH
 Rails.application.require_environment!
 
-puts "Rails.env: #{Rails.env}"
-
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'rails/sh'
 Rails::Sh.start

@@ -9,6 +9,8 @@ module Rails
 
     class << self
       def start
+        puts "Rails.env: #{Rails.env}"
+        puts "type `help` to print help"
         setup_readline
         while buf = Readline.readline("\e[42mrails>\e[0m ", true)
           line = buf.strip

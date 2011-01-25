@@ -35,6 +35,17 @@ Rails::Sh::Command.define 'exit' do
   _exit
 end
 
+Rails::Sh::Command.define 'help' do
+  Rails::Sh.execute_rails_command('--help')
+  puts <<-HELP
+
+The rails-sh commands are:
+ help    print help
+ routes  print routes
+ exit    exit from rails-sh
+  HELP
+end
+
 Rails::Sh::Command.define 'routes' do |controller|
   Rails.application.reload_routes!
   all_routes = Rails.application.routes.routes

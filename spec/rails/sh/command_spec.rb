@@ -16,7 +16,7 @@ describe Rails::Sh::Command do
     end
 
     it 'We can get command names' do
-      Rails::Sh::Command.command_names.should =~ [:exit, :foo, :routes]
+      Rails::Sh::Command.command_names.should =~ [:exit, :foo, :help, :routes]
     end
   end
 end

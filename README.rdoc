@@ -11,6 +11,10 @@ rails-sh is a mini shell for rails3 that provides a uniform and quick access to 
   $ cd your-rails3-app
   $ rails-sh
 
+You can specify an environment as follows:
+
+  $ rails-sh test
+
 == Examples
 
 Generate a controller:

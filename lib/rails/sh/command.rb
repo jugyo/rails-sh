@@ -31,19 +31,15 @@ module Kernel
   def exit(*args); end
 end
 
-Rails::Sh::Command.define 'exit' do
-  _exit
-end
-
 Rails::Sh::Command.define 'help' do
   Rails::Sh.execute_rails_command('--help')
-  puts <<-HELP
+  puts <<HELP
 
 The rails-sh commands are:
- help    print help
- routes  print routes
- exit    exit from rails-sh
-  HELP
+ help               print help
+ routes CONTROLLER  print routes
+ exit               exit from rails-sh
+HELP
 end
 
 Rails::Sh::Command.define 'routes' do |controller|
@@ -72,4 +68,8 @@ Rails::Sh::Command.define 'routes' do |controller|
   routes.each do |r|
     puts "#{r[:name].rjust(name_width)} #{r[:verb].ljust(verb_width)} #{r[:path].ljust(path_width)} #{r[:reqs]}"
   end
+end
+
+Rails::Sh::Command.define 'exit' do
+  _exit
 end

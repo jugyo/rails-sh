@@ -15,7 +15,11 @@ module Rails
         while buf = Readline.readline("\e[42mrails>\e[0m ", true)
           line = buf.strip
           next if line.empty?
-          execute(line)
+          begin
+            execute(line)
+          rescue => e
+            puts "\e[41m#{e.message}\e[0m"
+          end
           setup_readline
         end
       end

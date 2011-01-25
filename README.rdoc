@@ -46,18 +46,7 @@ Print routes:
 
 == Commands
 
-* generate
-* destroy
-* plugin
-* benchmarker
-* profiler
-* console
-* server
-* dbconsole
-* application
-* runner
-* routes
-* exit
+please type help
 
 == Contributing to rails-sh
  

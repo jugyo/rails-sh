@@ -29,7 +29,7 @@ module Rails
 
       def execute(line)
         if command = Command.find(line)
-          arg = line[/\s+\w+/].strip rescue nil
+          arg = line[/\s+[^\s]+/].strip rescue nil
           command.call(arg)
         else
           execute_rails_command(line)

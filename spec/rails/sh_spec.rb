@@ -25,6 +25,10 @@ describe Rails::Sh do
   end
 
   ['console', 'g --help'].each do |line|
+    before do 
+      Rails::Sh.stub(:clear_dependencies) 
+    end
+
     it "a rails's command should be executed if the line is #{line}" do
       Rails::Sh.should_receive(:load).with("rails/commands.rb") do
         ARGV.should eq(line.split(/\s+/))

@@ -46,6 +46,11 @@ module Rails
         ARGV.concat line.split(/\s+/)
         puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"
         load 'rails/commands.rb'
+        clear_dependencies
+      end
+      def clear_dependencies
+        ActiveSupport::DescendantsTracker.clear
+        ActiveSupport::Dependencies.clear
       end
     end
   end

@@ -17,8 +17,10 @@ module Rails
           next if line.empty?
           begin
             execute(line)
-          rescue => e
-            puts "\e[41m#{e.message}\e[0m"
+          rescue SystemExit
+            raise
+          rescue Exception => e
+            puts "\e[41m#{e.message}\n#{e.backtrace.join("\n")}\e[0m"
           end
           setup_readline
         end

@@ -6,7 +6,7 @@ end
 include Rails::Sh
 
 Command.define 'help' do
-  execute_rails_command('--help')
+  Rails::Sh.execute_rails_command('--help')
   puts <<HELP
 
 \e[36mThe rails-sh commands are:

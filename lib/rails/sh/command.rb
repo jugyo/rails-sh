@@ -43,6 +43,8 @@ The rails-sh commands are:
  help               print help
  routes CONTROLLER  print routes
  exit               exit from rails-sh
+ system             execute a system command
+ eval               eval as ruby script
 HELP
 end
 
@@ -72,6 +74,18 @@ Rails::Sh::Command.define 'routes' do |controller|
   routes.each do |r|
     puts "#{r[:name].rjust(name_width)} #{r[:verb].ljust(verb_width)} #{r[:path].ljust(path_width)} #{r[:reqs]}"
   end
+end
+
+Rails::Sh::Command.define 'system' do |arg|
+  system arg
+end
+
+Rails::Sh::Command.define '!' do |arg|
+  Rails::Sh::Command[:system].call(arg)
+end
+
+Rails::Sh::Command.define 'eval' do |arg|
+  puts "\e[34m=> #{eval(arg, binding, __FILE__, __LINE__).inspect}\e[0m"
 end
 
 Rails::Sh::Command.define 'exit' do

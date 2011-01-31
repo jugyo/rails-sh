@@ -50,8 +50,6 @@ please type help
 
 == TODO
 
-* the `shell` command to execute shell commands
-
 == Contributing to rails-sh
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

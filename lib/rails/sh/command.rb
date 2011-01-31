@@ -11,7 +11,7 @@ module Rails
         end
 
         def find(line)
-          if name = line[/\w+/]
+          if name = line.split(/\s+/, 2)[0]
             commands[name.to_sym]
           else
             nil

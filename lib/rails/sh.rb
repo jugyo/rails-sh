@@ -35,7 +35,7 @@ module Rails
 
       def execute(line)
         if command = Command.find(line)
-          arg = line[/\s+[^\s]+/].strip rescue nil
+          arg = line.split(/\s+/, 2)[1] rescue nil
           command.call(arg)
         else
           execute_rails_command(line)

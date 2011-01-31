@@ -1,6 +1,7 @@
-require 'rails/sh/command'
-require 'rails/sh/patch_for_kernel'
 require 'readline'
+require 'rails/sh/patch_for_kernel'
+require 'rails/sh/command'
+require 'rails/sh/commands'
 
 module Rails
   module Sh

@@ -10,12 +10,12 @@ Command.define 'help' do
   puts <<HELP
 
 \e[36mThe rails-sh commands are:
-help               print help
-routes CONTROLLER  print routes
-exit               exit from rails-sh
-restart            restart rails-sh
-system             execute a system command
-eval               eval as ruby script\e[0m
+ help               print help
+ routes CONTROLLER  print routes
+ exit               exit from rails-sh
+ restart            restart rails-sh
+ system             execute a system command
+ eval               eval as ruby script\e[0m
 HELP
 end
 

@@ -21,6 +21,10 @@ module Rails
         def command_names
           commands.keys
         end
+
+        def [](name)
+          commands[name]
+        end
       end
     end
   end

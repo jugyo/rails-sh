@@ -15,8 +15,17 @@ module Rails
           $stdout = STDOUT
         end
 
-        def invoke(name)
-          Process.waitpid(fork { ::Rake.application[name].invoke })
+        def invoke(line)
+          name, *args = line.split(/\s+/)
+          pid = fork do
+            args.each do |arg|
+              env, value = arg.split('=')
+              next unless env && !env.empty? && value && !value.empty?
+              ENV[env] = value
+            end
+            ::Rake.application[name].invoke
+          end
+          Process.waitpid(pid)
         end
 
         def task_names

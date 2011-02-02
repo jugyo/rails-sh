@@ -47,8 +47,6 @@ please type help
 
 == TODO
 
-* parse args of rake commands and set values as ENV
-
 == Contributing to rails-sh
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

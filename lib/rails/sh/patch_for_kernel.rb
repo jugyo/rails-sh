@@ -15,5 +15,7 @@ module Kernel
   end
 
   alias_method :_exit, :exit
-  def exit(*args); end
+  def exit(*args)
+    irb_exit if caller.first =~ /irb_binding/
+  end
 end

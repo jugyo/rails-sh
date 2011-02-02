@@ -17,6 +17,10 @@ You can specify an environment as follows:
 
 == Examples
 
+Execute rake task:
+
+  rails> rake db:migrate
+
 Generate a controller:
 
   rails> g controller foo bar
@@ -36,13 +40,6 @@ Generate a controller:
 Run console:
 
   rails> console
-
-use `irb_exit` to exit from console.
-
-Print routes:
-
-  rails> routes
-  foo_bar GET /foo/bar(.:format) {:controller=>"foo", :action=>"bar"}
 
 == Commands
 

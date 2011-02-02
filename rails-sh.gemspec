@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rails-sh}
-  s.version = "1.2.0"
+  s.version = "1.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["jugyo"]
-  s.date = %q{2011-02-02}
+  s.date = %q{2011-02-03}
   s.default_executable = %q{rails-sh}
   s.description = %q{The Rails Shell to execute sub commands of rails quickly.}
   s.email = %q{jugyo.org@gmail.com}

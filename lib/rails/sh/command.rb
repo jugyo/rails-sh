@@ -1,6 +1,6 @@
 module Rails
   module Sh
-    class Command
+    module Command
       class << self
         def commands
           @commands ||= {}

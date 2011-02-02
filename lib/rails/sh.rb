@@ -1,5 +1,6 @@
 require 'readline'
 require 'rails/sh/patch_for_kernel'
+require 'rails/sh/rake'
 require 'rails/sh/command'
 require 'rails/sh/commands'
 
@@ -10,6 +11,7 @@ module Rails
 
     class << self
       def start
+        Rails::Sh::Rake.init
         puts "Rails.env: #{Rails.env}"
         puts "type `help` to print help"
         setup_readline
@@ -30,7 +32,11 @@ module Rails
       def setup_readline
         Readline.basic_word_break_characters = ""
         Readline.completion_proc = lambda do |word|
-          (Command.command_names.map { |name| name.to_s } + RAILS_SUB_COMMANDS).grep(/^#{Regexp.quote(word)}/)
+          (
+            Command.command_names.map { |name| name.to_s } +
+            RAILS_SUB_COMMANDS +
+            Rails::Sh::Rake.task_names.map { |name| "rake #{name}" }
+          ).grep(/^#{Regexp.quote(word)}/)
         end
       end
 

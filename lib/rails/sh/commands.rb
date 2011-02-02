@@ -5,17 +5,23 @@ Command.define 'help' do
   puts <<HELP
 
 \e[36mThe rails-sh commands are:
- help       print help
- rake TASK  execute rake task
- exit       exit from rails-sh
- restart    restart rails-sh
- system     execute a system command
- eval       eval as ruby script\e[0m
+ help           print help
+ rake TASK      execute rake task
+ tasks PATTERN  print rake tasks
+ exit           exit from rails-sh
+ restart        restart rails-sh
+ system         execute a system command
+ eval           eval as ruby script\e[0m
 HELP
 end
 
 Command.define 'rake' do |arg|
   Rails::Sh::Rake.invoke(arg)
+end
+
+Command.define 'tasks' do |arg|
+  Rake.application.options.show_task_pattern = arg ? Regexp.new(arg) : //
+  Rake.application.display_tasks_and_comments
 end
 
 Command.define 'system' do |arg|

@@ -6,8 +6,10 @@ module Rails
           @commands ||= {}
         end
 
-        def define(name, &block)
-          commands[name.to_sym] = block
+        def define(*names, &block)
+          names.each do |name|
+            commands[name.to_sym] = block
+          end
         end
 
         def find(line)

@@ -13,4 +13,7 @@ module Kernel
   def exec(*args)
     system(*args)
   end
+
+  alias_method :_exit, :exit
+  def exit(*args); end
 end

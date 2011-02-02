@@ -1,8 +1,3 @@
-module Kernel
-  alias_method :_exit, :exit
-  def exit(*args); end
-end
-
 include Rails::Sh
 
 Command.define 'help' do

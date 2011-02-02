@@ -30,7 +30,7 @@ module Rails
       def setup_readline
         Readline.basic_word_break_characters = ""
         Readline.completion_proc = lambda do |word|
-          (Command.command_names + RAILS_SUB_COMMANDS).grep(/^#{Regexp.quote(word)}/)
+          (Command.command_names.map { |name| name.to_s } + RAILS_SUB_COMMANDS).grep(/^#{Regexp.quote(word)}/)
         end
       end
 

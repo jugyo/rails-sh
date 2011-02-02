@@ -41,12 +41,14 @@ module Rails
       end
 
       def execute(line)
+        start = Time.now
         if command = Command.find(line)
           arg = line.split(/\s+/, 2)[1] rescue nil
           command.call(arg)
         else
           execute_rails_command(line)
         end
+        puts "\e[34m#{Time.now - start}sec\e[0m"
       end
 
       def execute_rails_command(line)

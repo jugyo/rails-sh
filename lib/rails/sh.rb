@@ -36,7 +36,7 @@ module Rails
             Command.command_names.map { |name| name.to_s } +
             RAILS_SUB_COMMANDS +
             Rails::Sh::Rake.task_names.map { |name| "rake #{name}" }
-          ).grep(/^#{Regexp.quote(word)}/)
+          ).grep(/#{Regexp.quote(word)}/)
         end
       end
 

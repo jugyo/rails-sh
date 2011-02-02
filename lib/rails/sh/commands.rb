@@ -16,7 +16,7 @@ HELP
 end
 
 Command.define 'rake' do |arg|
-  Rails::Sh::Rake.invoke(arg)
+  Rails::Sh::Rake.invoke(arg || :default)
 end
 
 Command.define 'tasks' do |arg|

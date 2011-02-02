@@ -38,7 +38,7 @@ end
 
 Command.define 'restart' do
   puts 'restarting...'
-  _exec File.expand_path($0)
+  _exec File.expand_path('../../../../bin/rails-sh', __FILE__)
 end
 
 Command.define 'exit' do

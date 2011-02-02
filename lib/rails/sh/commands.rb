@@ -61,7 +61,7 @@ end
 
 Command.define 'restart' do
   puts 'restarting...'
-  exec File.expand_path($0)
+  Process.exec File.expand_path($0)
 end
 
 Command.define 'exit' do

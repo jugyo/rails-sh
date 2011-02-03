@@ -15,6 +15,7 @@ module Rails
         end
         after_fork do
           ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
+          ActionDispatch::Callbacks.new(Proc.new {}, false).call({})
         end
 
         init_rake

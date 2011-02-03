@@ -7,10 +7,11 @@ help              print help
 rails ARG         execute rails command
 rake TASK         execute rake task
 t, tasks PATTERN  print rake tasks
+bundle            execute bundler command
 exit              exit from rails-sh
 restart           restart rails-sh
 reload            reload the environment
-!, exec           execute a system command
+!                 execute a system command
 eval              eval as ruby script
 HELP
   print "\e[0m"
@@ -37,8 +38,16 @@ Command.define 'tasks', 't' do |arg|
   Rake.application.display_tasks_and_comments
 end
 
-Command.define 'exec', '!' do |arg|
-  Process.waitpid(fork { Kernel.exec(arg) })
+Command.define 'bundle' do |arg|
+  Rails::Sh::Bundler.invoke(arg)
+end
+
+Rails::Sh::Bundler.sub_commands.map do |c|
+  Command.completions << "bundle #{c}"
+end
+
+Command.define '!' do |arg|
+  system arg
 end
 
 Command.define 'eval' do |arg|

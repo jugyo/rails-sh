@@ -3,6 +3,7 @@ require 'rails/sh/forkable'
 require 'rails/sh/rails'
 require 'rails/sh/rake'
 require 'rails/sh/command'
+require 'rails/sh/bundler'
 
 module Rails
   module Sh

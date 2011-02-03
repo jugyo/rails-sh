@@ -1,10 +1,13 @@
 require 'readline'
+require 'rails/sh/hook_for_fork'
 require 'rails/sh/rake'
 require 'rails/sh/command'
 require 'rails/sh/commands'
 
 module Rails
   module Sh
+    extend HookForFork
+
     RAILS_SUB_COMMANDS = ['generate', 'destroy', 'plugin', 'benchmarker', 'profiler', 
                           'console', 'server', 'dbconsole', 'application', 'runner']
 
@@ -46,22 +49,6 @@ module Rails
         Rails::Sh::Rake.after_fork do
           run_after_fork
         end
-      end
-
-      def before_fork(&block)
-        @before_fork = block
-      end
-
-      def after_fork(&block)
-        @after_fork = block
-      end
-
-      def run_before_fork(&block)
-        @before_fork.call if @before_fork
-      end
-
-      def run_after_fork(&block)
-        @after_fork.call if @after_fork
       end
 
       def setup_readline

@@ -10,9 +10,18 @@ module Rails
 
     class << self
       def start
-        Rails::Sh::Rake.init
+        before_fork do
+          ActiveRecord::Base.remove_connection if defined?(ActiveRecord::Base)
+        end
+        after_fork do
+          ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
+        end
+
+        init_rake
+
         puts "Rails.env: #{Rails.env}"
         puts "type `help` to print help"
+
         setup_readline
         while buf = Readline.readline("rails> ", true)
           line = buf.strip
@@ -26,6 +35,32 @@ module Rails
           end
           setup_readline
         end
+      end
+
+      def init_rake
+        Rails::Sh::Rake.init
+        Rails::Sh::Rake.before_fork do
+          run_before_fork
+        end
+        Rails::Sh::Rake.after_fork do
+          run_after_fork
+        end
+      end
+
+      def before_fork(&block)
+        @before_fork = block
+      end
+
+      def after_fork(&block)
+        @after_fork = block
+      end
+
+      def run_before_fork(&block)
+        @before_fork.call if @before_fork
+      end
+
+      def run_after_fork(&block)
+        @after_fork.call if @after_fork
       end
 
       def setup_readline
@@ -51,7 +86,9 @@ module Rails
       end
 
       def execute_rails_command(line)
+        run_before_fork
         pid = fork do
+          run_after_fork
           ARGV.clear
           ARGV.concat line.split(/\s+/)
           puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"

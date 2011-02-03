@@ -31,7 +31,6 @@ Gem::Specification.new do |s|
     "lib/rails/sh.rb",
     "lib/rails/sh/command.rb",
     "lib/rails/sh/commands.rb",
-    "lib/rails/sh/patch_for_kernel.rb",
     "lib/rails/sh/rake.rb",
     "rails-sh.gemspec",
     "spec/rails/sh/command_spec.rb",

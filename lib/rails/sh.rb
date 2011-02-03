@@ -1,5 +1,4 @@
 require 'readline'
-require 'rails/sh/patch_for_kernel'
 require 'rails/sh/rake'
 require 'rails/sh/command'
 require 'rails/sh/commands'
@@ -52,17 +51,13 @@ module Rails
       end
 
       def execute_rails_command(line)
-        ENV.delete("RAILS_ENV")
-        ARGV.clear
-        ARGV.concat line.split(/\s+/)
-        puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"
-        clear_dependencies
-        load 'rails/commands.rb'
-      end
-
-      def clear_dependencies
-        ActiveSupport::DescendantsTracker.clear
-        ActiveSupport::Dependencies.clear
+        pid = fork do
+          ARGV.clear
+          ARGV.concat line.split(/\s+/)
+          puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"
+          require 'rails/commands'
+        end
+        Process.waitpid(pid)
       end
     end
   end

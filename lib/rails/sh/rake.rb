@@ -4,11 +4,19 @@ require 'stringio'
 module Rails
   module Sh
     module Rake
-      extend HookForFork
+      extend Forkable
 
       class << self
         def init
           $stdout = StringIO.new
+
+          before_fork do
+            ActiveRecord::Base.remove_connection if defined?(ActiveRecord::Base)
+          end
+          after_fork do
+            ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
+          end
+
           ::Rake.application = ::Rake::Application.new
           ::Rake.application.init
           ::Rake.application.load_rakefile
@@ -17,19 +25,14 @@ module Rails
           $stdout = STDOUT
         end
 
-        def invoke(line)
+        def _invoke(line)
           name, *args = line.split(/\s+/)
-          run_before_fork
-          pid = fork do
-            run_after_fork
-            args.each do |arg|
-              env, value = arg.split('=')
-              next unless env && !env.empty? && value && !value.empty?
-              ENV[env] = value
-            end
-            ::Rake.application[name].invoke
+          args.each do |arg|
+            env, value = arg.split('=')
+            next unless env && !env.empty? && value && !value.empty?
+            ENV[env] = value
           end
-          Process.waitpid(pid)
+          ::Rake.application[name].invoke
         end
 
         def task_names

@@ -1,20 +1,24 @@
 module Rails
   module Sh
     module Rails
-      extend HookForFork
+      extend Forkable
 
       class << self
-        def invoke(line)
-          run_before_fork
-          pid = fork do
-            run_after_fork
-            reload!
-            ARGV.clear
-            ARGV.concat line.split(/\s+/)
-            puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"
-            require 'rails/commands'
+        def init
+          before_fork do
+            ActiveRecord::Base.remove_connection if defined?(ActiveRecord::Base)
           end
-          Process.waitpid(pid)
+          after_fork do
+            ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
+          end
+        end
+
+        def _invoke(line)
+          reload!
+          ARGV.clear
+          ARGV.concat line.split(/\s+/)
+          puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"
+          require 'rails/commands'
         end
 
         def reload!

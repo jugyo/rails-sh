@@ -1,22 +1,15 @@
 require 'readline'
-require 'rails/sh/hook_for_fork'
+require 'rails/sh/forkable'
 require 'rails/sh/rails'
 require 'rails/sh/rake'
 require 'rails/sh/command'
 
 module Rails
   module Sh
-    extend HookForFork
-
     class << self
       def start
-        before_fork { ActiveRecord::Base.remove_connection if defined?(ActiveRecord::Base) }
-        after_fork  { ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base) }
+        ::Rails::Sh::Rails.init
         ::Rails::Sh::Rake.init
-        ::Rails::Sh::Rake.before_fork   { run_before_fork }
-        ::Rails::Sh::Rake.after_fork    { run_after_fork }
-        ::Rails::Sh::Rails.before_fork  { run_before_fork }
-        ::Rails::Sh::Rails.after_fork   { run_after_fork }
 
         require 'rails/sh/commands'
 

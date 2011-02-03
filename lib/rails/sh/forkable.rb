@@ -1,6 +1,19 @@
 module Rails
   module Sh
-    module HookForFork
+    module Forkable
+      def invoke(line)
+        run_before_fork
+        pid = fork do
+          run_after_fork
+          _invoke(line)
+        end
+        Process.waitpid(pid)
+      end
+
+      def _invoke
+        raise NotImplementedError
+      end
+
       def before_fork(&block)
         @before_fork = block
       end

@@ -23,7 +23,7 @@ describe Rails::Sh::Command do
       Rails::Sh::Command.command_names.should =~ [:foo]
     end
 
-    define 'Command.[]' do
+    describe 'Command.[]' do
       it 'can get a command' do
         Rails::Sh::Command['foo'].should eq(@block)
       end

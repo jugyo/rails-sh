@@ -25,7 +25,7 @@ module Rails
         end
 
         def [](name)
-          commands[name]
+          commands[name.to_sym]
         end
       end
     end

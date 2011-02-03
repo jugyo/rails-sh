@@ -9,6 +9,7 @@ module Rails
         def define(*names, &block)
           names.each do |name|
             commands[name.to_sym] = block
+            completions << name.to_s
           end
         end
 
@@ -26,6 +27,19 @@ module Rails
 
         def [](name)
           commands[name.to_sym]
+        end
+
+        def completion_proc
+          lambda { |line| completions.grep(/#{Regexp.quote(line)}/) }
+        end
+
+        def completions
+          @completions ||= []
+        end
+
+        def clear
+          commands.clear
+          completions.clear
         end
       end
     end

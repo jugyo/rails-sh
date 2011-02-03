@@ -20,8 +20,17 @@ Command.define 'rails' do |arg|
   Rails::Sh.execute_rails_command(arg)
 end
 
+%w(generate destroy plugin benchmarker profiler
+    console server dbconsole application runner).map do |c|
+  Command.completions << "rails #{c}"
+end
+
 Command.define 'rake' do |arg|
   Rails::Sh::Rake.invoke(arg || :default)
+end
+
+Rails::Sh::Rake.task_names.map do |name|
+  Command.completions << "rake #{name}"
 end
 
 Command.define 'tasks', 't' do |arg|

@@ -2,14 +2,10 @@ require 'readline'
 require 'rails/sh/hook_for_fork'
 require 'rails/sh/rake'
 require 'rails/sh/command'
-require 'rails/sh/commands'
 
 module Rails
   module Sh
     extend HookForFork
-
-    RAILS_SUB_COMMANDS = ['generate', 'destroy', 'plugin', 'benchmarker', 'profiler', 
-                          'console', 'server', 'dbconsole', 'application', 'runner']
 
     class << self
       def start
@@ -21,6 +17,8 @@ module Rails
         end
 
         init_rake
+
+        require 'rails/sh/commands'
 
         puts "Rails.env: #{Rails.env}"
         puts "type `help` to print help"
@@ -52,13 +50,7 @@ module Rails
 
       def setup_readline
         Readline.basic_word_break_characters = ""
-        Readline.completion_proc = lambda do |word|
-          (
-            Command.command_names.map { |name| name.to_s } +
-            RAILS_SUB_COMMANDS.map { |name| "rails #{name}" } +
-            Rails::Sh::Rake.task_names.map { |name| "rake #{name}" }
-          ).grep(/#{Regexp.quote(word)}/)
-        end
+        Readline.completion_proc = Command.completion_proc
       end
 
       def execute(line)

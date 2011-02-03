@@ -25,7 +25,7 @@ Rails::Sh::Rails.sub_commands.map do |c|
 end
 
 Command.define 'rake' do |arg|
-  Rails::Sh::Rake.invoke(arg || :default)
+  Rails::Sh::Rake.invoke(arg)
 end
 
 Rails::Sh::Rake.task_names.map do |name|

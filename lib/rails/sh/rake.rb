@@ -26,6 +26,7 @@ module Rails
         end
 
         def _invoke(line)
+          line ||= 'default'
           name, *args = line.split(/\s+/)
           args.each do |arg|
             env, value = arg.split('=')

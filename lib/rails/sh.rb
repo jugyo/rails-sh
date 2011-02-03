@@ -1,5 +1,6 @@
 require 'readline'
 require 'rails/sh/hook_for_fork'
+require 'rails/sh/rails'
 require 'rails/sh/rake'
 require 'rails/sh/command'
 
@@ -9,18 +10,17 @@ module Rails
 
     class << self
       def start
-        before_fork do
-          ActiveRecord::Base.remove_connection if defined?(ActiveRecord::Base)
-        end
-        after_fork do
-          ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
-        end
-
-        init_rake
+        before_fork { ActiveRecord::Base.remove_connection if defined?(ActiveRecord::Base) }
+        after_fork  { ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base) }
+        ::Rails::Sh::Rake.init
+        ::Rails::Sh::Rake.before_fork   { run_before_fork }
+        ::Rails::Sh::Rake.after_fork    { run_after_fork }
+        ::Rails::Sh::Rails.before_fork  { run_before_fork }
+        ::Rails::Sh::Rails.after_fork   { run_after_fork }
 
         require 'rails/sh/commands'
 
-        puts "Rails.env: #{Rails.env}"
+        puts "Rails.env: #{::Rails.env}"
         puts "type `help` to print help"
 
         setup_readline
@@ -38,16 +38,6 @@ module Rails
         end
       end
 
-      def init_rake
-        Rails::Sh::Rake.init
-        Rails::Sh::Rake.before_fork do
-          run_before_fork
-        end
-        Rails::Sh::Rake.after_fork do
-          run_after_fork
-        end
-      end
-
       def setup_readline
         Readline.basic_word_break_characters = ""
         Readline.completion_proc = Command.completion_proc
@@ -62,23 +52,6 @@ module Rails
         else
           puts "\e[41mCommand not found\e[0m"
         end
-      end
-
-      def execute_rails_command(line)
-        run_before_fork
-        pid = fork do
-          run_after_fork
-          reload!
-          ARGV.clear
-          ARGV.concat line.split(/\s+/)
-          puts "\e[42m$ rails #{ARGV.join(" ")}\e[0m"
-          require 'rails/commands'
-        end
-        Process.waitpid(pid)
-      end
-
-      def reload!
-        ActionDispatch::Callbacks.new(Proc.new {}, false).call({})
       end
     end
   end

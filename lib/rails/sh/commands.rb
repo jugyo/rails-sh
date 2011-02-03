@@ -17,11 +17,10 @@ HELP
 end
 
 Command.define 'rails' do |arg|
-  Rails::Sh.execute_rails_command(arg)
+  Rails::Sh::Rails.invoke(arg)
 end
 
-%w(generate destroy plugin benchmarker profiler
-    console server dbconsole application runner).map do |c|
+Rails::Sh::Rails.sub_commands.map do |c|
   Command.completions << "rails #{c}"
 end
 
@@ -52,7 +51,7 @@ Command.define 'restart' do
 end
 
 Command.define 'reload' do
-  Rails::Sh.reload!
+  Rails::Sh::Rails.reload!
 end
 
 Command.define 'exit' do

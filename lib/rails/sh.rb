@@ -55,21 +55,21 @@ module Rails
         Readline.completion_proc = lambda do |word|
           (
             Command.command_names.map { |name| name.to_s } +
-            RAILS_SUB_COMMANDS +
+            RAILS_SUB_COMMANDS.map { |name| "rails #{name}" } +
             Rails::Sh::Rake.task_names.map { |name| "rake #{name}" }
           ).grep(/#{Regexp.quote(word)}/)
         end
       end
 
       def execute(line)
-        start = Time.now
         if command = Command.find(line)
+          start = Time.now
           arg = line.split(/\s+/, 2)[1] rescue nil
           command.call(arg)
+          puts "\e[34m#{Time.now - start}sec\e[0m"
         else
-          execute_rails_command(line)
+          puts "\e[41mCommand not found\e[0m"
         end
-        puts "\e[34m#{Time.now - start}sec\e[0m"
       end
 
       def execute_rails_command(line)

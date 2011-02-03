@@ -10,6 +10,7 @@ Command.define 'help' do
  t, tasks PATTERN   print rake tasks
  exit               exit from rails-sh
  restart            restart rails-sh
+ reload             reload the environment
  !, system          execute a system command
  eval               eval as ruby script\e[0m
 HELP
@@ -35,6 +36,10 @@ end
 Command.define 'restart' do
   puts 'restarting...'
   exec File.expand_path('../../../../bin/rails-sh', __FILE__)
+end
+
+Command.define 'reload' do
+  Rails::Sh.reload!
 end
 
 Command.define 'exit' do

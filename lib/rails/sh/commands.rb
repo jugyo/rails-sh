@@ -1,17 +1,19 @@
 include Rails::Sh
 
 Command.define 'help' do
+  print "\e[36m"
   puts <<HELP
-\e[36mhelp               print help
-rails ARG          execute rails command
-rake TASK          execute rake task
-t, tasks PATTERN   print rake tasks
-exit               exit from rails-sh
-restart            restart rails-sh
-reload             reload the environment
-!, system          execute a system command
-eval               eval as ruby script\e[0m
+help              print help
+rails ARG         execute rails command
+rake TASK         execute rake task
+t, tasks PATTERN  print rake tasks
+exit              exit from rails-sh
+restart           restart rails-sh
+reload            reload the environment
+!, exec           execute a system command
+eval              eval as ruby script
 HELP
+  print "\e[0m"
 end
 
 Command.define 'rails' do |arg|
@@ -27,8 +29,8 @@ Command.define 'tasks', 't' do |arg|
   Rake.application.display_tasks_and_comments
 end
 
-Command.define 'system', '!' do |arg|
-  system arg
+Command.define 'exec', '!' do |arg|
+  Process.waitpid(fork { Kernel.exec(arg) })
 end
 
 Command.define 'eval' do |arg|

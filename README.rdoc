@@ -23,7 +23,7 @@ Execute rake task:
 
 Generate a controller:
 
-  rails> g controller foo bar
+  rails> rails generate controller foo bar
   $ rails g controller foo bar
         create  app/controllers/foo_controller.rb
          route  get "foo/bar"

@@ -14,8 +14,8 @@ module Rails
 
         require 'rails/sh/commands'
 
-        puts "Rails.env: #{::Rails.env}"
-        puts "type `help` to print help"
+        puts "\e[36mRails.env: #{::Rails.env}\e[0m"
+        puts "\e[36mtype `help` to print help\e[0m"
 
         setup_readline
         while buf = Readline.readline("rails-sh> ", true)

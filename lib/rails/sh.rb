@@ -18,7 +18,7 @@ module Rails
         puts "type `help` to print help"
 
         setup_readline
-        while buf = Readline.readline("rails> ", true)
+        while buf = Readline.readline("rails-sh> ", true)
           line = buf.strip
           next if line.empty?
           begin

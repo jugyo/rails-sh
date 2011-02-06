@@ -42,7 +42,7 @@ Command.define 'bundle' do |arg|
   Rails::Sh::Bundler.invoke(arg)
 end
 
-Rails::Sh::Bundler.sub_commands.map do |c|
+(Rails::Sh::Bundler.sub_commands - ['init']).map do |c|
   Command.completions << "bundle #{c}"
 end
 

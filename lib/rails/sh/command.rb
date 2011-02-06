@@ -37,6 +37,10 @@ module Rails
           @completions ||= []
         end
 
+        def completions=(completions)
+          @completions = completions
+        end
+
         def clear
           commands.clear
           completions.clear

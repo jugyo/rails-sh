@@ -18,7 +18,7 @@ module Rails
         puts "\e[36mtype `help` to print help\e[0m"
 
         setup_readline
-        while buf = Readline.readline("rails-sh> ", true)
+        while buf = Readline.readline(prompt, true)
           line = buf.strip
           next if line.empty?
           begin
@@ -30,6 +30,10 @@ module Rails
           end
           setup_readline
         end
+      end
+
+      def prompt
+        "\e[41m%s\e[0m> " % "rails-sh(#{::Rails.root.basename})"
       end
 
       def setup_readline

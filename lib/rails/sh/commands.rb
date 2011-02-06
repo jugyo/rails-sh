@@ -63,6 +63,12 @@ Command.define 'reload' do
   Rails::Sh::Rails.reload!
 end
 
+Command.define 'log' do |arg|
+  puts "\e[7mCtrl-C to quit\e[0m"
+  system 'tail', '-f', Rails.root.join('log', (arg || 'development') + '.log').to_s
+end
+Command.completions += %w(development test production).map { |i| "log #{i}" }
+
 Command.define 'exit' do
   exit
 end

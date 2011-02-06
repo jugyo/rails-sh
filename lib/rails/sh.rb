@@ -14,6 +14,8 @@ module Rails
 
         require 'rails/sh/commands'
 
+        begin; load "~/.railsshrc"; rescue LoadError; end
+
         puts "\e[36mRails.env: #{::Rails.env}\e[0m"
         puts "\e[36mtype `help` to print help\e[0m"
 

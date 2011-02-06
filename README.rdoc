@@ -45,6 +45,17 @@ Run console:
 
 please type help
 
+== Configuration
+
+rails-sh will try to load '~/railsshrc' as configuration.
+
+Example:
+
+  # ~/railsshrc
+  Rails::Sh::Command.define 'my_command' do |arg|
+    puts "Execute my_command with arg(`#{arg}`)!"
+  end
+
 == TODO
 
 == Contributing to rails-sh

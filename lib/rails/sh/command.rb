@@ -30,7 +30,17 @@ module Rails
         end
 
         def completion_proc
-          lambda { |line| completions.grep(/#{Regexp.quote(line)}/) }
+          lambda { |line|
+            regex = /#{Regexp.quote(line)}/
+            completions.map { |completion|
+              case completion
+              when String
+                completion if completion.match(regex)
+              when Proc
+                completion.call(line)
+              end
+            }.compact
+          }
         end
 
         def completions

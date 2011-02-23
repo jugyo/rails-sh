@@ -58,5 +58,16 @@ describe Rails::Sh::Command do
       Rails::Sh::Command.completion_proc.call('foo').should =~ ['foo']
       Rails::Sh::Command.completion_proc.call('rake').should =~ ['rake routes', 'rake spec']
     end
+
+    context 'with blocks for completion' do
+      before do
+        Rails::Sh::Command.completions.clear
+        Rails::Sh::Command.completions << lambda { |line| 'block' }
+      end
+
+      it 'return completions' do
+        Rails::Sh::Command.completion_proc.call('foo').should =~ ['block']
+      end
+    end
   end
 end

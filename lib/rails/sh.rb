@@ -35,7 +35,7 @@ module Rails
       end
 
       def prompt
-        "\e[41m%s\e[0m> " % "rails-sh(#{::Rails.root.basename})"
+        "%s> " % "rails-sh(#{::Rails.root.basename})"
       end
 
       def setup_readline

@@ -1,4 +1,5 @@
 require 'readline'
+require 'rails/sh/helpers'
 require 'rails/sh/forkable'
 require 'rails/sh/rails'
 require 'rails/sh/rake'

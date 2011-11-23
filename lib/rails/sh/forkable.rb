@@ -1,11 +1,23 @@
+require 'stringio'
+
 module Rails
   module Sh
     module Forkable
+      include Rails::Sh::Helpers
+
       def invoke(line)
         run_before_fork
         pid = fork do
           run_after_fork
-          _invoke(line)
+
+          begin
+            $stdout = StringIO.new
+            _invoke(line)
+          ensure
+            output = $stdout.string
+            lesspipe output
+            $stdout = STDOUT
+          end
         end
         Process.waitpid(pid)
       end

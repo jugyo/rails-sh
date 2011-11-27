@@ -5,19 +5,24 @@ module Rails
     module Forkable
       include Rails::Sh::Helpers
 
-      def invoke(line)
+      def invoke(line, options = {})
         run_before_fork
         pid = fork do
           run_after_fork
 
-          begin
-            $stdout = StringIO.new
+          if options[:pager]
+            begin
+              $stdout = StringIO.new
+              _invoke(line)
+            ensure
+              output = $stdout.string
+              lesspipe output
+              $stdout = STDOUT
+            end
+          else
             _invoke(line)
-          ensure
-            output = $stdout.string
-            lesspipe output
-            $stdout = STDOUT
           end
+
         end
         Process.waitpid(pid)
       end

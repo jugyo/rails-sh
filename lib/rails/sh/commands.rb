@@ -26,7 +26,12 @@ Rails::Sh::Rails.sub_commands.map do |c|
 end
 
 Command.define 'rake' do |arg|
-  Rails::Sh::Rake.invoke(arg)
+  case arg
+  when /^routes/
+    Rails::Sh::Rake.invoke(arg, :pager => true)
+  else
+    Rails::Sh::Rake.invoke(arg)
+  end
 end
 
 Rails::Sh::Rake.task_names.map do |name|

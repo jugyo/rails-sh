@@ -22,7 +22,7 @@ module Rails
         end
 
         def reload!
-          ActionDispatch::Callbacks.new(Proc.new {}, false).call({})
+          ActionDispatch::Callbacks.new(Proc.new {}).call({})
         end
 
         def sub_commands

@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rails-sh"
-  s.version = "1.5.1"
+  s.version = "1.5.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["jugyo"]
-  s.date = "2011-11-27"
+  s.date = "2012-02-03"
   s.description = "The Rails Shell to execute sub commands of rails quickly."
   s.email = "jugyo.org@gmail.com"
   s.executables = ["rails-sh"]
@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/jugyo/rails-sh"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.10"
   s.summary = "The Rails Shell"
   s.test_files = [
     "spec/rails/sh/command_spec.rb",

@@ -39,6 +39,7 @@ Rails::Sh::Rake.task_names.map do |name|
 end
 
 Command.define 'tasks', 't' do |arg|
+  Rake.application.options.show_tasks = :tasks
   Rake.application.options.show_task_pattern = arg ? Regexp.new(arg) : //
   Rake.application.display_tasks_and_comments
 end
